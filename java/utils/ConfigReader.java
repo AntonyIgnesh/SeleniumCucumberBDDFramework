@@ -41,7 +41,7 @@ public class ConfigReader {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception ("Error in getting value for " + propertyValue + " from application.properties file at " + configPropertiesFilePath);
+			//throw new Exception ("Error in getting value for " + propertyValue + " from application.properties file at " + configPropertiesFilePath);
 		}
 		
 		return value;
