@@ -28,6 +28,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,13 +43,16 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFFooter;
 import org.apache.poi.xwpf.usermodel.XWPFHeader;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
 
 public class InitScriptClass {
 	
@@ -715,12 +719,120 @@ public class InitScriptClass {
 			int twipsPerInch = 1440;
 			tabStop.setPos(BigInteger.valueOf(6 * twipsPerInch));
 			
+			XWPFParagraph heading = docx.createParagraph();
+			heading.setAlignment(ParagraphAlignment.CENTER);
+			XWPFRun headingRun = heading.createRun();
+			headingRun.addBreak();
+			headingRun.setBold(true);
+			headingRun.setColor("0071C1");
+			headingRun.setUnderline(UnderlinePatterns.THICK);
+			headingRun.setText("Automation Execution Report");
+			headingRun.addBreak();
 			
+			int sCount = pathToImage.size();
+			XWPFTable table = docx.createTable(sCount * 4, 1);
+			
+			int row = 0;
+			XWPFParagraph p1;
+			XWPFRun r1;
+			XWPFParagraph p2;
+			XWPFRun r2;
+			
+			for (String stepDesc: pathToImage.keySet()) {
+				
+				table.getRow(row).getCell(0).setColor("85C1E9");
+				p1 = table.getRow(row).getCell(0).getParagraphs().get(0);
+				p1.setAlignment(ParagraphAlignment.CENTER);
+				r1 = p1.createRun();
+				r1.setBold(true);
+				r1.setText("Step Comment : " + stepDesc);
+				
+				p2 = table.getRow(row + 1).getCell(0).getParagraphs().get(0);
+				p2.setAlignment(ParagraphAlignment.CENTER);
+				r2 = p2.createRun();
+				
+				try {
+					
+					BufferedImage imageList = ImageIO.read(new File(pathToImage.get(stepDesc)));
+					
+					if (imageList.getHeight() > 2000) {
+						r2.addPicture(new FileInputStream(pathToImage.get(stepDesc)), XWPFDocument.PICTURE_TYPE_PNG, pathToImage.get(stepDesc), Units.toEMU(520), Units.toEMU(600));
+					}
+					else {
+						r2.addPicture(new FileInputStream(pathToImage.get(stepDesc)), XWPFDocument.PICTURE_TYPE_PNG, pathToImage.get(stepDesc), Units.toEMU(450), Units.toEMU(300));
+					}
+					
+					row = row + 3;
+					
+				}
+				catch (Exception e) {
+					
+				}
+				
+				printLog("INFO", "INFO : Images and comments added to word document " + screenCurrentImagePath + path);
+				
+				docx.write(new FileOutputStream(screenCurrentImagePath + path));
+				
+				printLog("INFO", "INFO : Word report created successfully in path = " + screenCurrentImagePath + path);
+				
+			}
 			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 			printLog("FAIL", "FAIL : Error in generateWordReport");
+		}
+		
+	}
+	
+	public boolean CloseExecutionForCurrentTestCase(String Msg) {
+		
+		try {
+			
+			String ssPath = "";
+			
+			String ssPath2 = "";
+			
+			if (!Msg.equalsIgnoreCase("CloseExecution")) {
+				
+				printLog("INFO", "INFO : CloseExecutionForCurrentTestCase Started due to failure in function");
+				
+				updateExtentReport("Fail", Msg, "Yes");
+				
+				ssPath = takeBase64Screenshot(screenshotName, tagName, Msg);
+				
+				printLog("INFO", "INFO : Extent report is being closed");
+				
+				ExtentReportClass.CleanUpExecutionReportUsingExtent(currentlyExecutedTest);
+				
+				printLog("INFO", "INFO : Extent report closed successfully");
+				
+				generateWordReport("FAIL");
+				
+				Assert.fail(Msg);
+				
+			}
+			else {
+				
+				ssPath = takeBase64Screenshot(screenshotName, tagName, Msg);
+				
+				ExtentReportClass.CleanUpExecutionReportUsingExtent(currentlyExecutedTest);
+				
+				printLog("INFO", "INFO : Extent report closed successfully");
+				
+				generateWordReport("PASS");
+				
+			}
+			
+			return true;
+			
+		}
+		catch (Exception e) {
+			
+			ExtentReportClass.CleanUpExecutionReportUsingExtent(currentlyExecutedTest);
+			
+			return true;
+			
 		}
 		
 	}
