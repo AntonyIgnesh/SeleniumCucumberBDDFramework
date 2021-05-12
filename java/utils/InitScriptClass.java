@@ -29,14 +29,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.lang.System.Logger.Level;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 
 import javax.imageio.ImageIO;
 
@@ -88,12 +94,12 @@ public class InitScriptClass {
 	 * 
 	 * **************************************************************************************************************************************/
 	
-	public void InitScript() {
-		
+	public LinkedHashMap<String, String> InitScript() {
+
+		LinkedHashMap<String, String> tempTestData = null;
+
 		try {
 			
-			LinkedHashMap<String, String> tempTestData = null;
-
 			tagName = configReader.getPropertyValue("tagToBeExecuted");
 			sheetName = configReader.getPropertyValue("sheetName");
 			browserName = configReader.getPropertyValue("Browser");
@@ -129,10 +135,26 @@ public class InitScriptClass {
 				
 			}
 			
-		}
-		catch (Exception e) {
+			@SuppressWarnings("rawtypes")
+			Iterator it = tempTestData.entrySet().iterator();
+			
+			while (it.hasNext()) {
+				
+				@SuppressWarnings("rawtypes")
+				Map.Entry pair = (Map.Entry) it.next();
+				
+				printLog("INFO", "INFO : | " + pair.getKey() + " | " + pair.getValue() + " |");
+				
+				it.remove();
+				
+			}
 			
 		}
+		catch (Exception e) {
+			printLog("FAIL", "FAIL : Error in InitScript");
+		}
+
+		return tempTestData;
 		
 	}
 	

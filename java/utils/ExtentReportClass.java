@@ -16,7 +16,7 @@ public class ExtentReportClass {
 	public static ExtentReports extentReportObject;
 	public static ExtentTest extentTest;
 	
-	static String reportLocation = "./reports/";
+	static String reportLocation = "/SeleniumCucumberBDDFramework/reports";
 	static String reportDocumentTitle = "Automation Execution Summary";
 	static String reportName = "Automation Report";
 	

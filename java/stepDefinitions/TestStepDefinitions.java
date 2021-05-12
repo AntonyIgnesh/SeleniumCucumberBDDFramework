@@ -4,8 +4,9 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import pages.GooglePage;
 import pages.TestPages;
+import utils.InitScriptClass;
 
-public class TestStepDefinitions {
+public class TestStepDefinitions extends InitScriptClass {
 	
 	@Given("^Preloaded with all the setup")
 	public void perconditioning () {
@@ -21,6 +22,7 @@ public class TestStepDefinitions {
 	
 	@Given("^Launch Browser and go to URL")
 	public void launchBrowser() {
+		InitScript();
 		System.out.println("Launch Initiated");
 		new GooglePage().appPropTest();
 	}
