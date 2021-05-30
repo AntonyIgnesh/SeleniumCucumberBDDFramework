@@ -1,17 +1,16 @@
 package pages;
 
 import utils.ApplicationPropertiesReader;
+import utils.InitScriptClass;
 
-public class GooglePage {
+public class GooglePage extends InitScriptClass {
 	
 	ApplicationPropertiesReader appReader = new ApplicationPropertiesReader();
 	
-	public void appPropTest() {
-		try {
-			System.out.println(appReader.getPropertyValue("Browser"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void launchGoogle() {
+		webDriver.get("https://www.google.com/");
+		waitFor(10);
+		takeScreenshot("Google Landing Page", "GoogleSearch", "hi");
 	}
 	
 	public void searchInGoogle() {

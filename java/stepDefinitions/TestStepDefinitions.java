@@ -23,8 +23,7 @@ public class TestStepDefinitions extends InitScriptClass {
 	@Given("^Launch Browser and go to URL")
 	public void launchBrowser() {
 		InitScript();
-		System.out.println("Launch Initiated");
-		new GooglePage().appPropTest();
+		new GooglePage().launchGoogle();
 	}
 	
 	@Then("^Search for given data")

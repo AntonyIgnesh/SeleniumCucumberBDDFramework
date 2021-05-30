@@ -231,6 +231,15 @@ public class InitScriptClass {
 		}
 		
 	}
+
+	/****************************************************************************************************************************************
+	 * 
+	 * Function Description 	: To launch the IE browser
+	 * Author					: Antony Ignatius Thenraja F
+	 * Modified By				:
+	 * Last Modified			: 28-Feb-2021
+	 * 
+	 * **************************************************************************************************************************************/
 	
 	@SuppressWarnings("deprecation")
 	public void launchIEDriver() {
@@ -266,6 +275,15 @@ public class InitScriptClass {
 		}
 		
 	}
+
+	/****************************************************************************************************************************************
+	 * 
+	 * Function Description 	: To quit the IE browser
+	 * Author					: Antony Ignatius Thenraja F
+	 * Modified By				:
+	 * Last Modified			: 28-Feb-2021
+	 * 
+	 * **************************************************************************************************************************************/
 	
 	public void closeIEDriver() {
 		
@@ -292,6 +310,15 @@ public class InitScriptClass {
 		}
 		
 	}
+
+	/****************************************************************************************************************************************
+	 * 
+	 * Function Description 	: To launch the Chrome Browser
+	 * Author					: Antony Ignatius Thenraja F
+	 * Modified By				:
+	 * Last Modified			: 28-Feb-2021
+	 * 
+	 * **************************************************************************************************************************************/
 	
 	public void launchChromeDriver() {
 		
@@ -311,6 +338,8 @@ public class InitScriptClass {
 			
 			webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			
+			webDriver.manage().window().maximize();
+			
 			printLog("INFO", "INFO : Chrome Driver launched successfully");
 			
 		}
@@ -320,6 +349,15 @@ public class InitScriptClass {
 		}
 		
 	}
+
+	/****************************************************************************************************************************************
+	 * 
+	 * Function Description 	: To quit the Chrome browser
+	 * Author					: Antony Ignatius Thenraja F
+	 * Modified By				:
+	 * Last Modified			: 28-Feb-2021
+	 * 
+	 * **************************************************************************************************************************************/
 	
 	public void closeChromeDriver() {
 		
@@ -340,6 +378,15 @@ public class InitScriptClass {
 		}
 		
 	}
+
+	/****************************************************************************************************************************************
+	 * 
+	 * Function Description 	: To wait for seconds
+	 * Author					: Antony Ignatius Thenraja F
+	 * Modified By				:
+	 * Last Modified			: 28-Feb-2021
+	 * 
+	 * **************************************************************************************************************************************/
 	
 	public void waitFor (long secondsToWait) {
 		
@@ -358,6 +405,15 @@ public class InitScriptClass {
 		}
 		
 	}
+
+	/****************************************************************************************************************************************
+	 * 
+	 * Function Description 	: To update the extent reports with the screenshots
+	 * Author					: Antony Ignatius Thenraja F
+	 * Modified By				:
+	 * Last Modified			: 28-Feb-2021
+	 * 
+	 * **************************************************************************************************************************************/
 	
 	public void updateExtentReport(String status, String message, String fullPage) {
 		
@@ -443,6 +499,15 @@ public class InitScriptClass {
 		}
 		
 	}
+
+	/****************************************************************************************************************************************
+	 * 
+	 * Function Description 	: To update the extent report as PASS
+	 * Author					: Antony Ignatius Thenraja F
+	 * Modified By				:
+	 * Last Modified			: 28-Feb-2021
+	 * 
+	 * **************************************************************************************************************************************/
 	
 	public void extentReportPass(String message) {
 		
@@ -457,6 +522,15 @@ public class InitScriptClass {
 		}
 		
 	}
+
+	/****************************************************************************************************************************************
+	 * 
+	 * Function Description 	: To update extent report with single screenshot
+	 * Author					: Antony Ignatius Thenraja F
+	 * Modified By				:
+	 * Last Modified			: 28-Feb-2021
+	 * 
+	 * **************************************************************************************************************************************/
 	
 	public void extentReportPassSingle(String message) {
 		
@@ -471,6 +545,15 @@ public class InitScriptClass {
 		}
 		
 	}	
+
+	/****************************************************************************************************************************************
+	 * 
+	 * Function Description 	: To take screenshot
+	 * Author					: Antony Ignatius Thenraja F
+	 * Modified By				:
+	 * Last Modified			: 28-Feb-2021
+	 * 
+	 * **************************************************************************************************************************************/
 	
 	public String getScreenShotImage(String screenshotName, String testCaseName, String message, boolean fullScreenshot) {
 		
@@ -613,6 +696,15 @@ public class InitScriptClass {
 		return screenCurrentImagePath + path;
 		
 	}
+
+	/****************************************************************************************************************************************
+	 * 
+	 * Function Description 	: To take Base 64 screenshot 
+	 * Author					: Antony Ignatius Thenraja F
+	 * Modified By				:
+	 * Last Modified			: 28-Feb-2021
+	 * 
+	 * **************************************************************************************************************************************/
 	
 	public String takeBase64Screenshot (String screenshotName, String testCaseName, String message) {
 		
